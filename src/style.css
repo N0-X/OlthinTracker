@@ -1,0 +1,178 @@
+/* =====================================
+   BASE
+===================================== */
+
+body {
+  margin: 0;
+  padding: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #1e1f26;
+  color: #f1f1f1;
+  font-size: 14px;
+}
+
+/* =====================================
+   BOTÕES GERAIS
+===================================== */
+
+button {
+  background: #3a3f58;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: #505780;
+}
+
+/* =====================================
+   CARD
+===================================== */
+
+.item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #2b2d3a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 6px 0;
+  gap: 20px;
+}
+
+/* =====================================
+   COLUNA ESQUERDA
+===================================== */
+
+.card-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.item-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #444;
+}
+
+.name-row {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-name {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Iniciativa */
+.initiative {
+  width: 40px;
+  height: 24px;
+  font-size: 13px;
+  text-align: center;
+  background: #3a3f58;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+/* =====================================
+   COLUNA DIREITA (CONTADORES)
+===================================== */
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+/* Container do contador */
+.counterback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Botões +/- */
+.counterback button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  font-size: 13px;
+}
+
+.item-card.active-turn .counterback button {
+  background: #6c3cff;
+  box-shadow: 0 0 6px rgba(108, 60, 255, 0.6);
+}
+
+/* Inputs contador */
+.counterback input {
+  width: 34px;
+  height: 24px;
+  font-size: 13px;
+  text-align: center;
+  background: #3a3f58;
+  border: none;
+  border-radius: 6px;
+  color: white;
+}
+
+/* =====================================
+   ROUND TRACKER
+===================================== */
+
+#roundTracker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#roundTracker button {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+#roundText {
+  font-weight: bold;
+  font-size: 15px;
+  padding: 4px 10px;
+  background: #3a3f58;
+  border-radius: 6px;
+}
+
+/* =====================================
+   REMOVER SETINHAS DOS INPUTS
+===================================== */
+
+/* Chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.active-turn {
+  border: 2px solid #6E6197;
+  background-color: #423a5a;
+}
+

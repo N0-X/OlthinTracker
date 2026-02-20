@@ -1,0 +1,107 @@
+import "./style.css";
+import OBR from "@owlbear-rodeo/sdk";
+import { setupContextMenu } from "./contextMenu";
+import { createItemCard } from "./itemCard";
+import { nextTurn, previousTurn, getCombatState } from "./combatTracker";
+
+const ID = "com.tutorial.initiative-tracker";
+
+const app = document.querySelector("#app") as HTMLDivElement;
+
+app.innerHTML = `
+  <h1>Olthin Tracker</h1>
+  <div id="itemList"></div>
+  <div id="roundTracker">
+    <button id="prevTurn"><</button>
+    <span id="roundText">Rodada 1</span>
+    <button id="nextTurn">></button>
+  </div>
+`;
+
+const list = document.querySelector("#itemList") as HTMLDivElement;
+const roundText = document.querySelector("#roundText") as HTMLSpanElement;
+
+const renderedCards = new Map<string, HTMLElement>();
+
+function sortTracked(items: any[]) {
+  return items
+    .filter((i) => i.metadata[`${ID}/metadata`])
+    .sort(
+      (a, b) =>
+        b.metadata[`${ID}/metadata`].initiative -
+        a.metadata[`${ID}/metadata`].initiative
+    );
+}
+
+async function updateHighlight() {
+  const state = await getCombatState();
+
+  document.querySelectorAll(".item-card").forEach((c) =>
+    c.classList.remove("active-turn")
+  );
+
+  if (!state.currentTurnId) return;
+
+  const active = renderedCards.get(state.currentTurnId);
+  active?.classList.add("active-turn");
+}
+
+async function updateRound() {
+  const state = await getCombatState();
+  roundText.textContent = `Rodada ${state.round}`;
+}
+
+async function syncUI(items: any[]) {
+  const tracked = sortTracked(items);
+  const existingIds = new Set(renderedCards.keys());
+
+  for (let item of tracked) {
+    if (!renderedCards.has(item.id)) {
+      const card = createItemCard(item);
+      renderedCards.set(item.id, card);
+      list.appendChild(card);
+    }
+    existingIds.delete(item.id);
+  }
+
+  // remover os que saíram
+  for (let id of existingIds) {
+    const card = renderedCards.get(id);
+    card?.remove();
+    renderedCards.delete(id);
+  }
+
+  // reordenar visualmente
+  tracked.forEach((item) => {
+    const card = renderedCards.get(item.id)!;
+    list.appendChild(card);
+  });
+
+  updateHighlight();
+}
+
+OBR.onReady(() => {
+  setupContextMenu();
+
+  document
+    .querySelector("#nextTurn")!
+    .addEventListener("click", async () => {
+      await nextTurn();
+    });
+
+  document
+    .querySelector("#prevTurn")!
+    .addEventListener("click", async () => {
+      await previousTurn();
+    });
+
+  OBR.scene.items.onChange(syncUI);
+  OBR.scene.onMetadataChange(() => {
+    updateRound();
+    updateHighlight();
+  
+  OBR.action.setHeight(600);
+  OBR.action.setWidth(390);
+  
+  });
+});

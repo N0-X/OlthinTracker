@@ -1,0 +1,15 @@
+{
+    "name": "Olthin Tracker",
+    "version": "1.0",
+    "manifest_version": 1,
+    "author": "Comedor de Batatas",
+    "icon": "/logo.png",
+    "description": "Feito para o RPG Olthin!",
+    "action": {
+        "title": "Olthin Tracker",
+        "icon": "/icon.svg",
+        "popover": "/",
+        "height": 129,
+        "width": 250
+    }
+}
