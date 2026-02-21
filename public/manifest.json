@@ -1,6 +1,6 @@
 {
     "name": "Olthin Tracker",
-    "version": "1.5",
+    "version": "1.6",
     "manifest_version": 1,
     "author": "Comedor de Batatas",
     "icon": "/logo.png",
@@ -9,7 +9,7 @@
         "title": "Olthin Tracker",
         "icon": "/icon.svg",
         "popover": "/",
-        "height": 129,
-        "width": 250
+        "height": 600,
+        "width": 400
     }
 }
