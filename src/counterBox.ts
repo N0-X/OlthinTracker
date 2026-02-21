@@ -2,6 +2,19 @@ import OBR from "@owlbear-rodeo/sdk";
 
 const ID = "com.tutorial.initiative-tracker";
 
+interface CounterData {
+  current: number;
+  max: number;
+}
+
+interface ItemMetadata {
+  initiative: number;
+  counters: {
+    counter1: CounterData;
+    counter2: CounterData;
+  };
+}
+
 export function createCounterBox(
   itemId: string,
   key: "counter1" | "counter2",
@@ -28,12 +41,13 @@ export function createCounterBox(
   const maxInput = container.querySelector(".max") as HTMLInputElement;
 
   function update(newCurrent: number, newMax: number) {
-    OBR.scene.items.updateItems([itemId], (items) => {
-      const data = items[0].metadata[`${ID}/metadata`];
-      data.counters[key].current = newCurrent;
-      data.counters[key].max = newMax;
-    });
-  }
+  OBR.scene.items.updateItems([itemId], (items) => {
+    const data = items[0].metadata[`${ID}/metadata`] as ItemMetadata;
+
+    data.counters[key].current = newCurrent;
+    data.counters[key].max = newMax;
+  });
+}
 
   minus.onclick = () => {
     let val = Number(currentInput.value);
