@@ -112,10 +112,6 @@ button:hover {
   font-size: 13px;
 }
 
-.item-card.active-turn .counterback button {
-  background: #6c3cff;
-  box-shadow: 0 0 6px rgba(108, 60, 255, 0.6);
-}
 
 /* Inputs contador */
 .counterback input {
@@ -173,6 +169,6 @@ input[type=number] {
 
 .active-turn {
   border: 2px solid #6E6197;
-  background-color: #423a5a;
+  background-color: #615683;
 }
 
