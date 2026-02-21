@@ -1,6 +1,5 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { createCounterBox } from "./counterBox";
-import { getCombatState } from "./combatTracker";
 
 const ID = "com.tutorial.initiative-tracker";
 
