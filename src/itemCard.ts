@@ -3,6 +3,11 @@ import { createCounterBox } from "./counterBox";
 
 const ID = "com.tutorial.initiative-tracker";
 
+export function updateCard(card: HTMLElement, item: any) {
+    const nameEl = card.querySelector(".card-name") as HTMLDivElement;
+    nameEl.textContent = item.text?.plainText || item.name;
+}
+
 export function createItemCard(item: any) {
     const container = document.createElement("div");
     container.className = "item-card";
@@ -30,7 +35,7 @@ export function createItemCard(item: any) {
     // Nome
     const name = document.createElement("div");
     name.className = "card-name";
-    name.textContent = item.name;
+    name.textContent = item.text?.plainText || item.name;
 
     // Iniciativa
     const initInput = document.createElement("input");

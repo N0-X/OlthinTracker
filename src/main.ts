@@ -1,7 +1,7 @@
 import "./style.css";
 import OBR from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "./contextMenu";
-import { createItemCard } from "./itemCard";
+import { createItemCard, updateCard } from "./itemCard";
 import { nextTurn, previousTurn, getCombatState } from "./combatTracker";
 
 const ID = "com.tutorial.initiative-tracker";
@@ -60,7 +60,10 @@ async function syncUI(items: any[]) {
       const card = createItemCard(item);
       renderedCards.set(item.id, card);
       list.appendChild(card);
+    } else {
+      updateCard(renderedCards.get(item.id)!, item);
     }
+    
     existingIds.delete(item.id);
   }
 
@@ -80,7 +83,7 @@ async function syncUI(items: any[]) {
   updateHighlight();
 }
 
-OBR.onReady(() => {
+OBR.onReady(async () => {
   setupContextMenu();
 
   document
@@ -94,6 +97,11 @@ OBR.onReady(() => {
     .addEventListener("click", async () => {
       await previousTurn();
     });
+
+    const items = await OBR.scene.items.getItems();
+      await syncUI(items);
+      await updateRound();
+      await updateHighlight();
 
   OBR.scene.items.onChange(syncUI);
   OBR.scene.onMetadataChange(() => {
