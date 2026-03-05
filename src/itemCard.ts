@@ -1,6 +1,7 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { createCounterBox } from "./counterBox";
-import { ItemMetadata, METADATA_KEY } from "./types";
+import { METADATA_KEY } from "./types";
+import type { ItemMetadata } from "./types";
 
 export function updateCard(card: HTMLElement, item: any) {
     const nameEl = card.querySelector(".card-name") as HTMLDivElement;
@@ -40,11 +41,12 @@ export function createItemCard(item: any) {
     const initInput = document.createElement("input");
     initInput.type = "number";
     initInput.className = "initiative";
-    initInput.value = data.initiative;
+  initInput.value = String(data.initiative);
 
     initInput.onchange = () => {
         OBR.scene.items.updateItems([item.id], (items) => {
-            items[0].metadata[`${ID}/metadata`].initiative = Number(initInput.value);
+          const meta = items[0].metadata[METADATA_KEY] as ItemMetadata;
+          meta.initiative = Number(initInput.value);
         });
     };
 

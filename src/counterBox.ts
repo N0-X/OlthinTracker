@@ -1,5 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
-import { ItemMetadata, METADATA_KEY, ResourceId } from "./types";
+import { METADATA_KEY } from "./types";
+import type { ItemMetadata, ResourceId } from "./types";
 
 export function createCounterBox(
   itemId: string,

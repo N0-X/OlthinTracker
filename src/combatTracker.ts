@@ -1,5 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
-import { EXTENSION_ID, METADATA_KEY, ItemMetadata } from "./types";
+import { EXTENSION_ID, METADATA_KEY } from "./types";
+import type { ItemMetadata } from "./types";
 
 const COMBAT_KEY = `${EXTENSION_ID}/combat`;
 
