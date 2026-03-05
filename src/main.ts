@@ -4,11 +4,15 @@ import { setupContextMenu } from "./contextMenu";
 import { createItemCard, updateCard } from "./itemCard";
 import { nextTurn, previousTurn, getCombatState } from "./combatTracker";
 import { METADATA_KEY } from "./types";
+import type { ItemMetadata } from "./types";
 
 const app = document.querySelector("#app") as HTMLDivElement;
 
 app.innerHTML = `
   <h1>Olthin Tracker</h1>
+  <div id="controls">
+    <button id="joinInitiative" style="display:none;">Entrar na iniciativa</button>
+  </div>
   <div id="itemList"></div>
   <div id="roundTracker">
     <button id="prevTurn"><</button>
@@ -19,6 +23,9 @@ app.innerHTML = `
 
 const list = document.querySelector("#itemList") as HTMLDivElement;
 const roundText = document.querySelector("#roundText") as HTMLSpanElement;
+const joinButton = document.querySelector(
+  "#joinInitiative"
+) as HTMLButtonElement | null;
 
 const renderedCards = new Map<string, HTMLElement>();
 
@@ -84,6 +91,53 @@ async function syncUI(items: any[]) {
 
 OBR.onReady(async () => {
   setupContextMenu();
+
+  const role = await OBR.player.getRole();
+
+  if (joinButton) {
+    if (role === "PLAYER") {
+      joinButton.style.display = "inline-block";
+      joinButton.addEventListener("click", async () => {
+        const selection = await OBR.player.getSelection();
+        if (!selection || selection.length === 0) {
+          return;
+        }
+
+        const playerId = await OBR.player.getId();
+        const playerName = await OBR.player.getName();
+
+        await OBR.scene.items.updateItems(selection, (items) => {
+          for (const item of items) {
+            const existing = item.metadata[METADATA_KEY] as
+              | ItemMetadata
+              | undefined;
+
+            if (existing) {
+              // Jogador assume controle da entrada existente
+              existing.ownerId = playerId;
+              existing.ownerName = playerName;
+              continue;
+            }
+
+            const metadata: ItemMetadata = {
+              initiative: 0,
+              ownerId: playerId,
+              ownerName: playerName,
+              resources: {
+                AP: { current: 5, max: 10, autoReset: true },
+                PA: { current: 3, max: 6, autoReset: true },
+              },
+              actions: [],
+            };
+
+            item.metadata[METADATA_KEY] = metadata;
+          }
+        });
+      });
+    } else {
+      joinButton.style.display = "none";
+    }
+  }
 
   document
     .querySelector("#nextTurn")!
