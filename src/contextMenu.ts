@@ -1,5 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
-import { EXTENSION_ID, METADATA_KEY, ItemMetadata } from "./types";
+import { EXTENSION_ID, METADATA_KEY } from "./types";
+import type { ItemMetadata } from "./types";
 
 export function setupContextMenu() {
     OBR.contextMenu.create({
