@@ -1,10 +1,10 @@
 {
-    "name": "Olthin Tracker",
-    "version": "1.7",
+    "name": "Olthin Tracker Multiplayer",
+    "version": "2.0.0",
     "manifest_version": 1,
     "author": "Comedor de Batatas",
     "icon": "/logo.png",
-    "description": "Feito para o RPG Olthin!",
+    "description": "Feito para o RPG Olthin! Versão multiplayer com recursos por jogador.",
     "action": {
         "title": "Olthin Tracker",
         "icon": "/icon.svg",

@@ -1,7 +1,6 @@
 import OBR from "@owlbear-rodeo/sdk";
 import { createCounterBox } from "./counterBox";
-
-const ID = "com.tutorial.initiative-tracker";
+import { ItemMetadata, METADATA_KEY } from "./types";
 
 export function updateCard(card: HTMLElement, item: any) {
     const nameEl = card.querySelector(".card-name") as HTMLDivElement;
@@ -13,7 +12,7 @@ export function createItemCard(item: any) {
     container.className = "item-card";
     container.dataset.id = item.id;
 
-    const data = item.metadata[`${ID}/metadata`];
+    const data = item.metadata[METADATA_KEY] as ItemMetadata;
 
     // ===== CRIANDO AS COLUNAS =====
 
@@ -56,25 +55,25 @@ export function createItemCard(item: any) {
     left.append(img, nameRow);
 
     // ===== CONTADORES =====
-    const counter1 = createCounterBox(
+    const counterAP = createCounterBox(
         item.id,
-        "counter1",
+        "AP",
         "Pa",
-        data.counters.counter1.current,
-        data.counters.counter1.max
+        data.resources.AP.current,
+        data.resources.AP.max
     );
 
-    const counter2 = createCounterBox(
+    const counterPA = createCounterBox(
         item.id,
-        "counter2",
+        "PA",
         "Ap",
-        data.counters.counter2.current,
-        data.counters.counter2.max
+        data.resources.PA.current,
+        data.resources.PA.max
     );
 
     
 
-    right.append(counter1, counter2);
+    right.append(counterAP, counterPA);
 
     // ===== MONTA CARD =====
     container.append(left, right);

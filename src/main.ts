@@ -3,8 +3,7 @@ import OBR from "@owlbear-rodeo/sdk";
 import { setupContextMenu } from "./contextMenu";
 import { createItemCard, updateCard } from "./itemCard";
 import { nextTurn, previousTurn, getCombatState } from "./combatTracker";
-
-const ID = "com.tutorial.initiative-tracker";
+import { METADATA_KEY } from "./types";
 
 const app = document.querySelector("#app") as HTMLDivElement;
 
@@ -25,11 +24,11 @@ const renderedCards = new Map<string, HTMLElement>();
 
 function sortTracked(items: any[]) {
   return items
-    .filter((i) => i.metadata[`${ID}/metadata`])
+    .filter((i) => i.metadata[METADATA_KEY])
     .sort(
       (a, b) =>
-        b.metadata[`${ID}/metadata`].initiative -
-        a.metadata[`${ID}/metadata`].initiative
+        b.metadata[METADATA_KEY].initiative -
+        a.metadata[METADATA_KEY].initiative
     );
 }
 

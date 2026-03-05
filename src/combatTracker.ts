@@ -1,15 +1,11 @@
 import OBR from "@owlbear-rodeo/sdk";
+import { EXTENSION_ID, METADATA_KEY, ItemMetadata } from "./types";
 
-const ID = "com.tutorial.initiative-tracker";
-const COMBAT_KEY = `${ID}/combat`;
+const COMBAT_KEY = `${EXTENSION_ID}/combat`;
 
 export interface CombatState { 
     round: number;
     currentTurnId: string | null;
-}
-
-interface TrackedMetadata {
-    initiative: number;
 }
 
 export async function getCombatState(): Promise<CombatState> {
@@ -33,10 +29,10 @@ export async function getCombatState(): Promise<CombatState> {
     const items = await OBR.scene.items.getItems();
 
     return items
-        .filter((i) => i.metadata[`${ID}/metadata`])
+        .filter((i) => i.metadata[METADATA_KEY])
         .sort((a, b) => {
-            const metaA = a.metadata[`${ID}/metadata`] as TrackedMetadata;
-            const metaB = b.metadata[`${ID}/metadata`] as TrackedMetadata;
+            const metaA = a.metadata[METADATA_KEY] as ItemMetadata;
+            const metaB = b.metadata[METADATA_KEY] as ItemMetadata;
 
             return metaB.initiative - metaA.initiative;
 });
